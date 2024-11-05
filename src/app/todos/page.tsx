@@ -92,7 +92,10 @@ const TodoPage = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {user?.email} - Total Todos: {items.length || 0}
             </Typography>
-            <IconButton color="inherit" onClick={() => dispatch(logout())}>
+            <IconButton color="inherit" onClick={() => {
+              dispatch(logout())
+              setAuthModal({ open: true, mode: 'signup', email: '' })
+            }}>
               <LogoutIcon />
             </IconButton>
           </Toolbar>
