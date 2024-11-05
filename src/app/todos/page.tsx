@@ -21,13 +21,20 @@ import { logout } from '@/store/slices/authSlice'
 import { fetchTodos, addTodo, updateTodo, deleteTodo } from '@/store/slices/todoSlice'
 import { AppDispatch } from '@/store/store'
 
+interface Todo {
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+}
+
 const TodoPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { isAuthenticated, isVerified, user } = useSelector((state: any) => state.auth)
   const { items, loading } = useSelector((state: any) => state.todos)
   
   const [inputText, setInputText] = useState('')
-  const [editingTodo, setEditingTodo] = useState<{ id: number, text: string } | null>(null)
+  const [editingTodo, setEditingTodo] = useState<{ id?: number, text?: string } | null>(null)
 
   const [authModal, setAuthModal] = useState({
     open: true,
@@ -45,24 +52,22 @@ const TodoPage = () => {
     if (inputText.trim()) {
       dispatch(addTodo({ 
         todo: inputText, 
-        userId: 1, // Using default userId since it's a dummy API
-        completed: false 
+        userId: 1
       }))
       setInputText('')
     }
   }
 
-  const handleUpdateTodo = (todo: any) => {
+  const handleUpdateTodo = (todo: Todo) => {
     dispatch(updateTodo({
       id: todo.id,
       todo: todo.todo,
-      completed: !todo.completed,
-      userId: todo.userId
+      completed: !todo.completed
     }))
   }
 
   const handleEditTodo = (id: number, newText: string) => {
-    const todo = items.find((t: any) => t.id === id)
+    const todo = items.find((t: Todo) => t.id === id)
     if (todo) {
       dispatch(updateTodo({
         ...todo,
@@ -157,8 +162,8 @@ const TodoPage = () => {
                     <TextField
                       value={editingTodo?.text}
                       onChange={(e) => setEditingTodo({ ...editingTodo, text: e.target.value })}
-                      onBlur={() => handleEditTodo(todo.id, editingTodo?.text)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleEditTodo(todo.id, editingTodo?.text)}
+                      onBlur={() => handleEditTodo(todo.id, editingTodo?.text || '')}
+                      onKeyPress={(e) => e.key === 'Enter' && handleEditTodo(todo.id, editingTodo?.text || '')}
                       className="flex-1 mx-2"
                       size="small"
                       autoFocus

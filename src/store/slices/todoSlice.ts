@@ -88,7 +88,7 @@ const todoSlice = createSlice({
       })
       .addMatcher(
         (action) => action.type.endsWith('/rejected'),
-        (state, action) => {
+        (state, action: any) => {
           state.loading = false
           state.error = action.error.message
         }
