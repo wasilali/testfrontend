@@ -173,7 +173,6 @@ const AuthModal = ({ open, onClose, mode, email, onModeChange }: AuthModalProps)
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                console.log("clicked")
                 onModeChange('login')
               }}
               sx={{ mt: 1, display: 'block' }}

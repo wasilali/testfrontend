@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || ""
-console.log(API_URL, process.env.NEXT_PUBLIC_API_URL);
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem('authState')
