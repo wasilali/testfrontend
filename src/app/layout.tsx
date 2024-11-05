@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
-
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -29,9 +29,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AppRouterCacheProvider>
         <ReduxProvider>
           {children}
         </ReduxProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
